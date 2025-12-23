@@ -5,6 +5,6 @@ namespace MemoryCachingPractice.Repositories
     {
         Task<IEnumerable<Student>> GetAllStudentDbAsync();
 
-        //Task<Student> GetAllStudentCache();
+        Task<IEnumerable<Student>> GetAllStudentCache();
     }
 }

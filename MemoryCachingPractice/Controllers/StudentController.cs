@@ -40,16 +40,18 @@ namespace MemoryCachingPractice.Controllers
             return Ok(students);
         }
 
+
         [HttpGet("student-cache")]
         public async Task<IActionResult> GetAllStudentsAsyncCache()
         {
 
             var stopwatch = Stopwatch.StartNew();
 
+            var students = await _repo.GetAllStudentCache(); // async method
 
             stopwatch.Stop();
-            _logger.LogInformation($"GetAllStudentsAsyncCache Method(); took {stopwatch.ElapsedMilliseconds}");
-            return Ok("Student");
+            _logger.LogInformation($"GetAllStudentsAsyncCache Method(); took {stopwatch.ElapsedMilliseconds} {stopwatch.}");
+            return Ok(students); 
         }
     }
 }
