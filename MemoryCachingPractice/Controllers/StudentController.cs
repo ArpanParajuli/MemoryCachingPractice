@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MemoryCachingPractice.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
@@ -11,20 +12,22 @@ namespace MemoryCachingPractice.Controllers
     {
         private readonly ILogger<StudentController> _logger;
 
-        private int counter1 = 0;
-        private int counter2 = 0;
+        private readonly IStudentRepository _repo;
 
-        public StudentController(ILogger<StudentController> logger)
+
+
+
+        public StudentController(ILogger<StudentController> logger , IStudentRepository repo)
         {
             _logger = logger;
+            _repo = repo;
         }
 
 
 
-        [HttpGet("student-nocache")]
-        public async Task<IActionResult> GetAllStudents()
+        [HttpGet("student-db")]
+        public async Task<IActionResult> GetAllStudentsAsyncDb()
         {
-            counter1++;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -33,18 +36,20 @@ namespace MemoryCachingPractice.Controllers
 
             stopwatch.Stop();
 
-            _logger.LogInformation($"GetAllStudents Method(); took {stopwatch.ElapsedMilliseconds} Total Requests! : {counter1}");
+            _logger.LogInformation($"GetAllStudents Method(); took {stopwatch.ElapsedMilliseconds}");
             return Ok("Student");
         }
 
         [HttpGet("student-cache")]
         public async Task<IActionResult> GetAllStudentsAsyncCache()
         {
-            counter2++;
+    
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            _logger.LogInformation($"GetAllStudentsAsyncCache Method(); took {stopwatch.ElapsedMilliseconds} Total Requests! : {counter2}");
+
+            stopwatch.Stop();
+            _logger.LogInformation($"GetAllStudentsAsyncCache Method(); took {stopwatch.ElapsedMilliseconds}");
             return Ok("Student");
         }
     }
