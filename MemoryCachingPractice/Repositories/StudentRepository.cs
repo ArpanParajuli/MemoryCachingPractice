@@ -10,15 +10,15 @@ namespace MemoryCachingPractice.Repositories
            _context = context;
         }
 
-        public async Task <IEnumerable<Student>> GetAllStudentDb()
+        public async Task <IEnumerable<Student>> GetAllStudentDbAsync()
         {
             var students = await _context.Students.ToListAsync();
             return students;
         }  
 
-        public async Task<Student> GetAllStudentCache()
-        {
+        //public async Task<Student> GetAllStudentCache()
+        //{
             
-        }
+        //}
     }
 }

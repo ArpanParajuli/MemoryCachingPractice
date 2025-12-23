@@ -10,6 +10,8 @@ builder.Services.AddDbContext<StudentDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+builder.Services.AddScoped<DataSeeder>();
+
 builder.Services.AddScoped<IStudentRepository , StudentRepository>();
 
 builder.Services.AddMemoryCache();
@@ -34,5 +36,15 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    await seeder.SeedStudentsAsync(1000);
+}
+
+
+
 
 app.Run();

@@ -1,4 +1,5 @@
-﻿using MemoryCachingPractice.Repositories;
+﻿using MemoryCachingPractice.Migrations;
+using MemoryCachingPractice.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -28,24 +29,22 @@ namespace MemoryCachingPractice.Controllers
         [HttpGet("student-db")]
         public async Task<IActionResult> GetAllStudentsAsyncDb()
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            var stopwatch = Stopwatch.StartNew();
 
-
+            var students = await _repo.GetAllStudentDbAsync();
             // db calls
 
             stopwatch.Stop();
 
             _logger.LogInformation($"GetAllStudents Method(); took {stopwatch.ElapsedMilliseconds}");
-            return Ok("Student");
+            return Ok(students);
         }
 
         [HttpGet("student-cache")]
         public async Task<IActionResult> GetAllStudentsAsyncCache()
         {
-    
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+
+            var stopwatch = Stopwatch.StartNew();
 
 
             stopwatch.Stop();

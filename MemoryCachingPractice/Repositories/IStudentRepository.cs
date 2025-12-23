@@ -3,8 +3,8 @@ namespace MemoryCachingPractice.Repositories
 {
     public interface IStudentRepository
     {
-        Task<IEnumerable<Student>> GetAllStudentDb();
+        Task<IEnumerable<Student>> GetAllStudentDbAsync();
 
-        Task<Student> GetAllStudentCache();
+        //Task<Student> GetAllStudentCache();
     }
 }
